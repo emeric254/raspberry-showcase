@@ -2,7 +2,7 @@
 
 source ~/raspberry-showcase/config.sh
 
-# verify chromium is installed
+# verify omxplayer is installed
 which omxplayer || exit 1
 
 FILES=$VIDEO_FOLDER/*
