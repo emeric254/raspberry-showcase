@@ -13,3 +13,7 @@ CHROME_URL="https://google.com"
 
 # videos
 VIDEO_FOLDER="/home/pi/Videos"
+
+# images
+IMAGE_FOLDER="/home/pi/Images"
+SLIDESHOW_DELAY=5
