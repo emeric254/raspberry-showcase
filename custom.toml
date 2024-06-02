@@ -1,0 +1,47 @@
+# Raspberry PI OS config.toml
+# This file is used for the initial setup of the system on the first boot, if
+# it's s present in the boot partition of the installation.
+#
+# This file is loaded by firstboot, parsed by init_config and ends up
+# as several calls to imager_custom.
+# The example below has all current fields.
+#
+# References:
+# - https://gist.github.com/lpenz/ef21bb38a7aa12ebde17fa719a8546b5
+# - https://github.com/RPi-Distro/raspberrypi-sys-mods/blob/master/usr/lib/raspberrypi-sys-mods/firstboot
+# - https://github.com/RPi-Distro/raspberrypi-sys-mods/blob/master/usr/lib/raspberrypi-sys-mods/init_config
+# - https://github.com/RPi-Distro/raspberrypi-sys-mods/blob/master/usr/lib/raspberrypi-sys-mods/imager_custom
+
+# Required:
+config_version = 1
+
+[system]
+hostname = "raspberrypi"
+
+[user]
+# If present, the default "rpi" user gets renamed to this "name"
+name = "pi"
+# The password can be encrypted or plain. To encrypt, we can use "openssl passwd -5 raspberry"
+password = "$5$yihSPUCAtYMyQ5Ej$OUhCRBVcPixtxzdKuEYwLkgeSI7MXwLRYwUlQS1WEa6"
+password_encrypted = true
+
+[ssh]
+enabled = true
+password_authentication = false
+# copy your public key here.
+authorized_keys = [ "ssh-rsa ... user@host", ... ]
+
+[wlan]
+ssid = "MY_WIFI_NAME"
+# The password can be encrypted or plain. To encrypt, we can use "openssl passwd -5 raspberry"
+password = "$5$uBC2qDAoL7MfpDIz$bijXSe8XWHdBiQWPXRV6PIhPdX0dpWqW1LnLHKrjd14"
+password_encrypted = true
+hidden = false
+
+# The country is written to /etc/default/crda
+# Reference: https://wireless.wiki.kernel.org/en/developers/Regulatory
+country = "FR"
+
+[locale]
+keymap = "fr"
+timezone = "Europe/Paris"
