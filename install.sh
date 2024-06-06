@@ -4,11 +4,11 @@
 cd "$(dirname "$0")" || exit 1
 
 # call raspi-config to setup auto-login to desktop
-raspi-config nonint do_boot_behaviour B4
+sudo raspi-config nonint do_boot_behaviour B4
 
 # install needed dependencies
-apt-get update -q
-apt-get install -qy unclutter x11-xserver-utils xdotools feh mpv chromium
+sudo apt-get update -q
+sudo apt-get install -qy unclutter x11-xserver-utils xdotool feh mpv chromium
 
 # tweak video output
 sed -i "s/hdmi_force_hotplug=0/hdmi_force_hotplug=1/" /boot/config.txt
