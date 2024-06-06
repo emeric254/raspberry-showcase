@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source ~/raspberry-showcase/config.sh
+source /home/pi/raspberry-showcase/config.sh
 
 # verify chromium is installed
 which chromium-browser || exit 1

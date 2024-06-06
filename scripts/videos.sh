@@ -1,8 +1,8 @@
 #!/bin/bash
 
-source ~/raspberry-showcase/config.sh
+source /home/pi/raspberry-showcase/config.sh
 
-# verify omxplayer is installed
+# verify mpv is installed
 which mpv || exit 1
 
 FILES=$VIDEO_FOLDER/*

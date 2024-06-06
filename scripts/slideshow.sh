@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source ~/raspberry-showcase/config.sh
+source /home/pi/raspberry-showcase/config.sh
 
 # verify feh is installed
 which feh || exit 1

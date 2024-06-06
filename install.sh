@@ -29,7 +29,7 @@ sudo plymouth-set-default-theme --rebuild-initrd pix
 # thanks to https://github.com/ugotapi/pagepi
 
 # autohide taskbar by copying panel file to user profile and editing it disable updater notifications
-sudo rm -rf ~/.config/lxpanel
+sudo rm -rf /home/pi/.config/lxpanel
 cp -a -f /etc/xdg/lxpanel ~/.config/lxpanel
 awk 'NR==FNR{if (/  type=updater/) for (i=-1;i<=3;i++) del[NR+i]; next} !(FNR in del)' /etc/xdg/lxpanel/LXDE-pi/panels/panel /etc/xdg/lxpanel/LXDE-pi/panels/panel | dd of=~/.config/lxpanel/LXDE-pi/panels/panel
 
@@ -39,7 +39,7 @@ sed -i "s/heightwhenhidden=.*/heightwhenhidden=0/" ~/.config/lxpanel/LXDE-pi/pan
 sed -i '/  point_at_menu=0/a notifications=0' ~/.config/lxpanel/LXDE-pi/panels/panel
 
 # no window border
-sudo rm -rf ~/.config/openbox
+sudo rm -rf /home/pi/.config/openbox
 mkdir -p ~/.config/openbox
 cp /etc/xdg/openbox/rc.xml  ~/.config/openbox/rc.xml
 sed -i "s/<keepBorder>yes/<keepBorder>no/" ~/.config/openbox/rc.xml
@@ -50,7 +50,6 @@ sed -i "s#</applications>#<application class=\"*\"> <decor>no</decor>  </applica
 # no blank screen
 rm -rf ~/.config/lxsession/LXDE-pi
 mkdir -p ~/.config/lxsession/LXDE-pi
-#cp /etc/xdg/lxsession/LXDE-pi/autostart ~/.config/lxsession/LXDE-pi/autostart
 cat <<EOF > ~/.config/lxsession/LXDE-pi/autostart
 @xset s noblank
 @xset -dpms

@@ -10,11 +10,11 @@ SLEEP=0
 TARGET="slideshow"
 
 # slideshow
-IMAGE_FOLDER="~/Pictures"
+IMAGE_FOLDER="/home/pi/Pictures"
 SLIDESHOW_DELAY=10
 
 # videos
-VIDEO_FOLDER="~/Videos"
+VIDEO_FOLDER="/home/pi/Videos"
 
 # Chromium target URL
 CHROME_URL="https://google.com"
