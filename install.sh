@@ -1,63 +1,63 @@
+#!/bin/bash
+
+# make sure we are working from this script directory
+cd "$(dirname "$0")" || exit 1
+
+# call raspi-config to setup auto-login to desktop
+raspi-config nonint do_boot_behaviour B4
+
 # install needed dependencies
-apt-get install -qy unclutter x11-xserver-utils
-
-# configure desktop in kiosk mode
-
-mkdir -p /home/pi/.config/lxsession/LXDE-pi/
-
-cat <<EOF > /home/pi/.config/lxsession/LXDE-pi/autostart
-
-# clear the tty screen
-@xset s noblank
-@xset s off
-@xset -dpms
-
-# hide mouse cursor when not moving
-@unclutter -idle 0.3 -root &
-
-# launch the start script
-@bash /home/pi/raspberry-showcase/start.sh &
-
-EOF
-
-chown pi:pi -R /home/pi/.config/lxsession/LXDE-pi
-
-# disable raspberry pi splash and make system boot quiet
-PART=`mount | grep " / " | cut -f 1 -d " "`; echo "dwc_otg.lpm_enable=0 console=tty7 root=$PART rootfstype=ext4 elevator=deadline fsck.repair=yes rootwait quiet splash plymouth.ignore-serial-consoles logo.nologo vt.global_cursor_default=0" > /boot/cmdline.txt
+apt-get update -q
+apt-get install -qy unclutter x11-xserver-utils xdotools feh mpv chromium
 
 # tweak video output
-
 sed -i "s/hdmi_force_hotplug=0/hdmi_force_hotplug=1/" /boot/config.txt
-
 sed -i "s/disable_overscan=0/disable_overscan=1/" /boot/config.txt
 
 # disable ugly raspberry bootloader splash screen
-
 grep -q "disable_splash" /boot/config.txt && sed -i "s/disable_splash=0/disable_splash=1/" /boot/config.txt || echo "disable_splash=1" >> /boot/config.txt
 
-# enable boot splash logo
+# copy the desired splash logo
+cp ./splash.png /usr/share/plymouth/themes/pix/splash.png
+echo "generating boot splash screen, this might take a while, please wait..."
+sudo plymouth-set-default-theme --rebuild-initrd pix
 
-chmod 644 /etc/plymouth/plymouthd.conf
+####
+# thanks to https://github.com/ugotapi/pagepi
 
-cat <<EOF > /etc/plymouth/plymouthd.conf
-[Daemon]
-Theme=pix
-ShowDelay=0
+# autohide taskbar by copying panel file to user profile and editing it disable updater notifications
+cp -a -f /etc/xdg/lxpanel ~/.config/
+awk 'NR==FNR{if (/  type=updater/) for (i=-1;i<=3;i++) del[NR+i]; next} !(FNR in del)' /etc/xdg/lxpanel/LXDE-pi/panels/panel /etc/xdg/lxpanel/LXDE-pi/panels/panel | dd of=~/.config/lxpanel/LXDE-pi/panels/panel
+
+# edit file to hide panel
+sed -i "s/autohide=.*/autohide=1/" ~/.config/lxpanel/LXDE-pi/panels/panel
+sed -i "s/heightwhenhidden=.*/heightwhenhidden=0/" ~/.config/lxpanel/LXDE-pi/panels/panel
+sed -i '/  point_at_menu=0/a notifications=0' ~/.config/lxpanel/LXDE-pi/panels/panel
+
+# no window border
+mkdir -p ~/.config/openbox
+cp /etc/xdg/openbox/rc.xml  ~/.config/openbox/rc.xml
+sed -i "s/<keepBorder>yes/<keepBorder>no/" ~/.config/openbox/rc.xml
+
+# no decorations
+sed -i "s#</applications>#<application class=\"*\"> <decor>no</decor>  </application> </applications>#" ~/.config/openbox/rc.xml
+
+# no blank screen
+mkdir -p ~/.config/lxsession/LXDE-pi
+cp /etc/xdg/lxsession/LXDE-pi/autostart ~/.config/lxsession/LXDE-pi/autostart
+cat <<EOF >> ~/.config/lxsession/LXDE-pi/autostart
+@xset s noblank
+@xset -dpms
+@xset s off
+sh ~/raspberry-showcase/start.sh
 
 EOF
 
-chmod 644 /etc/plymouth/plymouthd.conf
+#change setting to openbox
+cp /etc/xdg/lxsession/LXDE-pi/desktop.conf ~/.config/lxsession/LXDE-pi/desktop.conf
+sed -i "s/window_manager=.*/window_manager=openbox/" ~/.config/lxsession/LXDE-pi/desktop.conf
 
-chmod 777 /usr/share/plymouth/themes/pix/splash.png
-
-# copy the desired splash logo
-
-cp ./logo.png /usr/share/plymouth/themes/pix/splash.png
-
-chmod 644 /usr/share/plymouth/themes/pix/splash.png
-
+####
 # finally sync disk and reboot
-
 sync
-
 reboot
