@@ -54,8 +54,7 @@ cat <<EOF > ~/.config/lxsession/LXDE-pi/autostart
 @xset s noblank
 @xset -dpms
 @xset s off
-sh /home/pi/raspberry-showcase/start.sh
-
+bash /home/pi/raspberry-showcase/start.sh
 EOF
 
 #change setting to openbox
