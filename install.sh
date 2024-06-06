@@ -11,14 +11,14 @@ sudo apt-get update -q
 sudo apt-get install -qy unclutter x11-xserver-utils xdotool feh mpv chromium
 
 # tweak video output
-sed -i "s/hdmi_force_hotplug=0/hdmi_force_hotplug=1/" /boot/config.txt
-sed -i "s/disable_overscan=0/disable_overscan=1/" /boot/config.txt
+sudo sed -i "s/hdmi_force_hotplug=0/hdmi_force_hotplug=1/" /boot/config.txt
+sudo sed -i "s/disable_overscan=0/disable_overscan=1/" /boot/config.txt
 
 # disable ugly raspberry bootloader splash screen
-grep -q "disable_splash" /boot/config.txt && sed -i "s/disable_splash=0/disable_splash=1/" /boot/config.txt || echo "disable_splash=1" >> /boot/config.txt
+grep -q "disable_splash" /boot/config.txt && sudo sed -i "s/disable_splash=0/disable_splash=1/" /boot/config.txt || sudo su -c "echo 'disable_splash=1' >> /boot/config.txt"
 
 # copy the desired splash logo
-cp ./splash.png /usr/share/plymouth/themes/pix/splash.png
+sudo cp ./splash.png /usr/share/plymouth/themes/pix/splash.png
 echo "generating boot splash screen, this might take a while, please wait..."
 sudo plymouth-set-default-theme --rebuild-initrd pix
 
@@ -60,4 +60,4 @@ sed -i "s/window_manager=.*/window_manager=openbox/" ~/.config/lxsession/LXDE-pi
 ####
 # finally sync disk and reboot
 sync
-reboot
+sudo reboot
