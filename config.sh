@@ -3,7 +3,6 @@
 # sleep between loops
 SLEEP=0
 
-
 # script to start
 #   chrome
 #   videos

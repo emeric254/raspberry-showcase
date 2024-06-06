@@ -29,7 +29,7 @@ password_encrypted = true
 enabled = true
 password_authentication = false
 # copy your public key here.
-authorized_keys = [ "ssh-rsa ... user@host", ... ]
+authorized_keys = [ "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDAPlF1z7Ekq7n1BmBpIilB6VxLpfUg8h3YjQjyu7QmyV5qJ0tEKl5uermyeLVFpCUbbgBS0+RleQmqGzQzuo5b9jAVNuFi6eQf/WfG26Z1P+UKQYuRnL1m8lMmwdCDKikFa5Ys2BStsP2rzTPf4o0cNFsDxhNZgJuMHTsK47xDI6pf81dMHhV2L6XvPD/PRhov8XTE1Ueu2GnLrv8vl3PM6F0apnaYOCwBfjq1CnGW+yAOJdSPEOhpSHA7CaeTTLHAanW1GFGk/OqTqISNJkTjibjOZnpQuXFSHFN4cbg9oX4EXej74plJQJNI+p2LJ+tjdOsQCzQiy+/6v16cz6rH user@localhost"]
 
 [wlan]
 ssid = "MY_WIFI_NAME"
