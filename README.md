@@ -6,6 +6,11 @@ Works on Raspberry pi 3 / 3+  "Bookworm"  (tested on 64 bit).
 
 Use a Raspberry connected to a monitor as a communication tool to display various kind of content.
 
+Its features are :
+  - picture continuous slideshow  (this is the default task, displaying everything in the `~/Pictures` folder)
+  - video playback (this loop forever, by default loading them from the `~/Videos` folder)
+  - web browser kiosk (this load by default `https://google.com`)
+
 ## Recommendations
 
 Using the target screen resolution for your various assets (images, videos) is highly recommended.

@@ -4,17 +4,17 @@
 SLEEP=0
 
 # script to start
-#   chrome
-#   videos
 #   slideshow
-TARGET="videos"
+#   videos
+#   chrome
+TARGET="slideshow"
 
-# Chromium target URL
-CHROME_URL="https://google.com"
+# slideshow
+IMAGE_FOLDER="~/Pictures"
+SLIDESHOW_DELAY=10
 
 # videos
 VIDEO_FOLDER="~/Videos"
 
-# images
-IMAGE_FOLDER="~/Pictures"
-SLIDESHOW_DELAY=10
+# Chromium target URL
+CHROME_URL="https://google.com"
